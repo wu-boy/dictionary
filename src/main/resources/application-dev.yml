@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    name: druidDataSource
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/test?allowMultiQueries=true&autoReconnect=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=true&zeroDateTimeBehavior=CONVERT_TO_NULL
+      username: test
+      password: test
+  jmx:
+    default-domain: dictionary
+mybatis-plus:
+  type-aliases-package: cn.wu.demo.dictionary
+  mapper-locations: classpath:mybatis/*.xml
+  configuration:
+    cache-enabled: true
+    auto-mapping-behavior: FULL
+    default-executor-type: REUSE
+    map-underscore-to-camel-case: true
+    lazy-loading-enabled: true
+    aggressive-lazy-loading: false
+logging:
+  file:
+    path: d:\test\log\dictionary

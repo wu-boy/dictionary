@@ -1,0 +1,43 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wu.demo.dictionary.mapper.DistrictMapper">
+
+    <insert id="insertBatch">
+        insert into sys_district(id,parent_id,label,type,order_number) values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id},#{item.parentId},#{item.label},#{item.type},#{item.orderNumber})
+        </foreach>
+    </insert>
+
+    <sql id="whereSql">
+        <where>
+            <if test="id != null and id != ''">
+                id like CONCAT('%',#{id},'%')
+            </if>
+            <if test="label != null and label != ''">
+                and label like CONCAT('%',#{label},'%')
+            </if>
+        </where>
+    </sql>
+
+    <select id="countPage" parameterType="districtQuery" resultType="int">
+        select count(*) from sys_district <include refid="whereSql"/>
+    </select>
+
+    <select id="listPage" parameterType="districtQuery" resultType="district">
+        select * from sys_district <include refid="whereSql"/>
+        order by id asc limit #{limit} offset #{offset}
+    </select>
+
+    <select id="listByType" parameterType="string" resultType="district">
+        select * from sys_district where type=#{value} order by order_number asc
+    </select>
+
+    <select id="listByParentId" parameterType="string" resultType="district">
+        select * from sys_district where parent_id=#{value} order by order_number asc
+    </select>
+
+    <select id="listByIdLength" parameterType="int" resultType="district">
+        select * from sys_district where length(id) &lt;= #{value} order by order_number asc
+    </select>
+
+</mapper>

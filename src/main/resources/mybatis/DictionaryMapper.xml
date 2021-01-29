@@ -1,0 +1,32 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wu.demo.dictionary.mapper.DictionaryMapper">
+
+    <sql id="whereSql">
+        <where>
+            <if test="type != null and type != ''">
+                type like CONCAT('%',#{type},'%')
+            </if>
+            <if test="label != null and label != ''">
+                and label like CONCAT('%',#{label},'%')
+            </if>
+        </where>
+    </sql>
+
+    <select id="countPage" parameterType="dictionaryQuery" resultType="int">
+        select count(*) from sys_dictionary <include refid="whereSql"/>
+    </select>
+
+    <select id="listPage" parameterType="dictionaryQuery" resultType="dictionary">
+        select * from sys_dictionary <include refid="whereSql"/>
+        order by create_time desc limit #{limit} offset #{offset}
+    </select>
+
+    <select id="listByType" parameterType="string" resultType="dictionary">
+        select * from sys_dictionary where type=#{value} order by order_number asc
+    </select>
+
+    <select id="listByLabel" parameterType="string" resultType="dictionary">
+        select * from sys_dictionary where label=#{value}
+    </select>
+
+</mapper>
