@@ -89,13 +89,13 @@ public class DistrictService {
 
     public void importData(){
         System.out.println("保存省");
-        insert("D:\\test\\china_regions-3.3\\mysql\\province.sql", DistrictCache.PROVINCE);
+        insert("D:\\test\\china_regions\\mysql\\province.sql", DistrictCache.PROVINCE);
         System.out.println("保存市");
-        insert("D:\\test\\china_regions-3.3\\mysql\\city.sql", DistrictCache.CITY);
+        insert("D:\\test\\china_regions\\mysql\\city.sql", DistrictCache.CITY);
         System.out.println("保存区");
-        insert("D:\\test\\china_regions-3.3\\mysql\\country.sql", DistrictCache.COUNTY);
+        insert("D:\\test\\china_regions\\mysql\\county.sql", DistrictCache.COUNTY);
         System.out.println("保存乡");
-        insert("D:\\test\\china_regions-3.3\\mysql\\town.sql", DistrictCache.TOWN);
+        insert("D:\\test\\china_regions\\mysql\\town.sql", DistrictCache.TOWN);
     }
 
     private void insert(String filePath, String type){
@@ -111,20 +111,23 @@ public class DistrictService {
             District d = new District();
 
             if(DistrictCache.PROVINCE.equals(type)){
-                d.setId(array[2].substring(0, 2));
+                d.setId(array[4].substring(0, 2));
+                d.setLabel(array[3]);
                 d.setParentId("");
             }else if(DistrictCache.CITY.equals(type)){
-                d.setId(array[2].substring(0, 4));
-                d.setParentId(array[2].substring(0, 2));
+                d.setId(array[5].substring(0, 4));
+                d.setLabel(array[4]);
+                d.setParentId(array[5].substring(0, 2));
             }else if(DistrictCache.COUNTY.equals(type)){
-                d.setId(array[2].substring(0, 6));
-                d.setParentId(array[2].substring(0, 4));
+                d.setId(array[5].substring(0, 6));
+                d.setLabel(array[4]);
+                d.setParentId(array[5].substring(0, 4));
             }else if(DistrictCache.TOWN.equals(type)){
-                d.setId(array[2].substring(0, 9));
-                d.setParentId(array[2].substring(0, 6));
+                d.setId(array[5].substring(0, 9));
+                d.setLabel(array[4]);
+                d.setParentId(array[5].substring(0, 6));
             }
 
-            d.setLabel(array[1]);
             d.setType(type);
             d.setOrderNumber(i);
             districtList.add(d);
